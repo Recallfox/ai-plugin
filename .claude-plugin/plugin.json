@@ -1,0 +1,18 @@
+{
+  "name": "recallfox",
+  "version": "0.1.0",
+  "description": "Push what you learn into recallfox, your spaced-repetition retention layer. Create decks and cards from any conversation, straight from Claude Code or Codex.",
+  "author": {
+    "name": "recallfox",
+    "url": "https://recallfox.com"
+  },
+  "homepage": "https://recallfox.com",
+  "repository": "https://github.com/Recallfox/ai-plugin",
+  "license": "MIT",
+  "keywords": [
+    "spaced-repetition",
+    "flashcards",
+    "learning",
+    "retention"
+  ]
+}

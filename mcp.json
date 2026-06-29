@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "recallfox": {
+      "type": "http",
+      "url": "https://app.recallfox.com/api/v1/mcp",
+      "headers": {
+        "x-recallfox-client": "plugin"
+      }
+    }
+  }
+}

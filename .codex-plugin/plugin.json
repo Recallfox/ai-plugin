@@ -1,0 +1,39 @@
+{
+  "name": "recallfox",
+  "version": "0.1.0",
+  "description": "Push what you learn into recallfox, your spaced-repetition retention layer.",
+  "author": {
+    "name": "recallfox",
+    "url": "https://recallfox.com"
+  },
+  "homepage": "https://recallfox.com",
+  "repository": "https://github.com/Recallfox/ai-plugin",
+  "license": "MIT",
+  "keywords": [
+    "spaced-repetition",
+    "flashcards",
+    "learning",
+    "retention"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "recallfox",
+    "shortDescription": "Turn what you learn into spaced-repetition cards",
+    "longDescription": "Create decks and cards in recallfox from any conversation. Spaced repetition resurfaces them over time so the knowledge sticks.",
+    "developerName": "recallfox",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://recallfox.com",
+    "defaultPrompt": [
+      "List my recallfox decks",
+      "Turn what we just covered into cards",
+      "Make cloze cards for these key terms"
+    ],
+    "brandColor": "#f06a26",
+    "logo": "./assets/mascot.svg"
+  }
+}

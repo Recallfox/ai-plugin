@@ -1,0 +1,24 @@
+{
+  "name": "recallfox",
+  "version": "0.1.0",
+  "description": "Push what you learn into recallfox from Gemini CLI",
+  "mcpServers": {
+    "recallfox": {
+      "command": "npx",
+      "args": [
+        "mcp-remote@latest",
+        "${RECALLFOX_MCP_URL:-https://app.recallfox.com/api/v1/mcp}",
+        "--header",
+        "x-recallfox-client:plugin"
+      ]
+    }
+  },
+  "contextFileName": "GEMINI.md",
+  "settings": [
+    {
+      "name": "recallfox MCP URL",
+      "description": "recallfox MCP endpoint URL (default: https://app.recallfox.com/api/v1/mcp). Set a custom URL if you are self-hosting recallfox.",
+      "envVar": "RECALLFOX_MCP_URL"
+    }
+  ]
+}

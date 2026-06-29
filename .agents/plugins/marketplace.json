@@ -1,0 +1,20 @@
+{
+  "name": "recallfox",
+  "interface": {
+    "displayName": "recallfox"
+  },
+  "plugins": [
+    {
+      "name": "recallfox",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/Recallfox/ai-plugin.git"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
