@@ -18,17 +18,15 @@ spaced-repetition scheduler resurface them over time so the knowledge actually s
 ## What's inside
 
 - **MCP connector** (`recallfox`) connects to the remote recallfox MCP server and exposes
-  deck and card operations, scoped to your account over OAuth. The tools:
-  - `list_decks` list your decks and their card counts.
-  - `create_deck` create a new deck.
-  - `create_basic_card` create a front/back card.
-  - `create_cloze_card` create a cloze-deletion card.
+  deck, topic, Learning Path, and card operations, scoped to your account over OAuth:
+  - inspect decks, retention, topics, progress/access, and existing cards;
+  - create/update/delete/reorder topics and configure or study ahead in a Learning Path;
+  - create/update/delete cards, assign them to topics, and move them across decks.
 - **Skill** (`recallfox`) teaches the agent when and how to capture what you learn as
-  well-formed, atomic cards, using the app's own vocabulary (recall vs practice, leeches,
-  maturity).
+  well-formed, atomic cards; reuse existing structure; reason about locked topics and retention;
+  and ask before making structural changes.
 - **Commands**
   - `/recallfox:recall-this [topic]` capture the conversation (or a topic) into cards.
-  - `/recallfox:decks` list your decks and card counts.
 
 ## Install
 
@@ -106,4 +104,3 @@ just commit and push to `main`. Optionally bump `version` in the manifests (semv
 the change is worth signalling.
 
 Anyone who has it installed picks up the change with `/plugin marketplace update recallfox`.
-

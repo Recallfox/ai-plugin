@@ -1,83 +1,110 @@
 ---
 name: recallfox
-description: Capture what the user is learning into recallfox as spaced-repetition cards. Use when the user wants to remember something, says "add this to recallfox", "make cards", "recall this", or right after you have explained or taught something worth retaining. Creates decks and cards via the recallfox MCP connector.
+description: Capture and organize durable knowledge in recallfox using decks, topics, Learning Paths, and spaced-repetition cards. Use when the user asks to remember something, make cards, organize cards or topics, inspect learning progress, or says "add this to recallfox" or "recall this".
 ---
 
 # recallfox
 
-recallfox is a spaced-repetition flashcard app (FSRS scheduler). This skill turns things
-the user learns in a conversation into cards that the app will resurface over time, so the
-knowledge actually sticks.
+recallfox is a spaced-repetition retention layer. Use its MCP tools to turn a small number of
+durable ideas into atomic cards and place them coherently in the user's existing learning structure.
+The user authorizes the connector once; every tool is scoped to their account.
 
-The recallfox MCP connector (server name `recallfox`) provides the tools. The user
-authorizes it once via OAuth in their client; every tool call is scoped to their account.
+## Consent boundary
 
-## When to use
+- Never create cards silently. Show the proposed cards and placement, then create only what the user
+  accepts. An explicit request to create specific cards is consent for those cards, but not for
+  unrelated restructuring.
+- Ask before creating, renaming, deleting, splitting, or reordering topics; moving existing cards;
+  enabling/disabling a Learning Path; changing its threshold; or unlocking a topic early.
+- A single combined proposal is enough: show the target deck/topic, cards, and any structural change
+  together. Do not make the user approve every tool call separately.
+- Zero cards is a valid result. Skip filler, trivia, and conversation-specific details.
 
-- The user explicitly asks: "add this to recallfox", "make cards for this", "recall this",
-  "I want to remember this".
-- Proactively, after you teach or explain something durable (a definition, an API, a
-  command, a concept): offer to capture it. Do not create cards silently without a clear
-  signal or an offer the user accepted.
+## Understand the structure before writing
 
-## Vocabulary (use the app's terms, exactly)
+For an existing library, inspect before proposing:
 
-- **Recall** is the scheduled review session; it feeds the FSRS scheduler and reschedules
-  cards. **Practice** is cram mode; it does not reschedule. When you create cards you are
-  adding to the user's recall queue.
-- A **deck** groups cards by topic. A **card** (note) is one of two kinds:
-  - **Basic** has a front (the prompt) and a back (the answer).
-  - **Cloze** is a single sentence with the words to hide wrapped in square brackets, e.g.
-    `The mitochondria is the [powerhouse] of the cell.` recallfox blanks out the bracketed
-    parts and asks the user to fill them in.
-- Standard spaced-repetition terms apply: a card matures as it is recalled correctly over
-  longer intervals; a card the user keeps failing is a **leech**. Use "retention",
-  "learned", "leeches", "maturity". Never invent terms like "mastery".
+1. `list_decks`: compare deck purpose, card/learned counts, retention, whether sequencing is enabled,
+   and its unlock threshold. Reuse a cohesive deck instead of creating a near-duplicate.
+2. `list_topics` on likely decks: inspect names, descriptions, order, card/learned counts, required
+   count, status, and `is_unlocked`.
+3. `list_cards` in likely decks/topics, using search where useful: avoid duplicates and understand
+   the level and vocabulary already present.
 
-## Choosing what to capture (be selective, never force cards)
+recallfox currently organizes authored notes through decks and exactly one topic per note. It does
+not expose tags through this connector. Do not invent tag state or claim to have inspected tags.
 
-This is the most important rule: **do not turn everything into a card.** Most of what is said
-in a conversation does not belong in long-term memory. Your job is to pick the few things
-genuinely worth remembering, not to maximize card count.
+## Decide where new knowledge belongs
 
-- **Propose, do not impose.** Select only the facts that are durable, reusable, and worth the
-  user's future review time. Skip the obvious, the trivia they will never need, and anything
-  tied to this one conversation.
-- **Always show the proposed cards and let the user choose.** Present the shortlist (the
-  question/answer or the cloze sentence per card) and let them drop, edit, or add before
-  anything is created. Never create cards silently, and never create a card the user did not
-  agree to.
-- If nothing is really worth keeping, say so and create nothing. Zero good cards beats ten
-  filler cards.
+Prefer the least structural change that keeps the library coherent:
 
-## Choosing the card type
+1. Reuse a relevant existing topic when the knowledge extends it naturally.
+2. Use the first/default topic (often **General**) for a small capture that does not justify a new
+   stage. Topics are optional as a user-facing organization choice even though every note has a
+   fallback topic internally.
+3. Propose a new topic inside an existing deck when the material forms a distinct concept or stage
+   with enough substance to grow. Give it a short description of what someone will learn.
+4. Propose a new deck only when no existing deck is a cohesive home. A deck should remain a coherent
+   study unit, not a catch-all folder.
 
-- Use **basic** when the knowledge is naturally a question and a distinct answer
-  ("What does `git rebase` do?").
-- Use **cloze** when the answer is a word or phrase living inside a sentence, or when the
-  surrounding sentence is the context that makes it meaningful (definitions, key terms in a
-  statement, fill-in-the-blank facts). Wrap each hidden span in `[brackets]`.
+Topic size is a working heuristic, not a database limit. Aim for a focused topic of roughly 10–25
+cards. When a topic would grow beyond about 25 good cards, inspect its contents and propose a split
+only if there is a clear conceptual seam. Never manufacture topics merely to satisfy a number.
 
-## Writing good cards (this matters more than volume)
+For a large capture, propose topic grouping and order before creating cards. For one or two durable
+ideas, General or an existing topic is usually better than new structure.
 
-- **Atomic:** one idea per card. Split compound facts into several cards.
-- **Minimal:** the answer is the smallest thing that makes the card correct.
-- **Context-free:** a card must make sense months later, with no memory of this chat. Do
-  not write "the function we discussed"; name it.
-- **Test recall, not recognition:** ask the user to produce the answer, not pick it.
-- Prefer 5 sharp cards over 20 padded ones. Quality of recall beats coverage.
+## Respect Learning Path access
 
-## How to create cards
+- Topic order gates only the introduction of **new** cards. Started and due cards keep their FSRS
+  schedules and remain accessible.
+- If the chosen topic is locked, tell the user the new cards will wait until that topic unlocks. Do
+  not silently use `study_ahead` to bypass the path.
+- `reorder_topics` changes future introduction order but preserves schedules and ordinary unlock
+  history. Always pass every topic id exactly once.
+- `configure_learning_path` is an explicit access rebase. It may change which unseen topics are
+  locked under the current order/progress. Use it only after explicit consent.
+- Retention describes successful learned-card reviews; it is useful context, not proof that a topic
+  is mastered and not a reason by itself to reorganize the deck.
+- `assign_cards_to_topic` and `move_cards_to_deck` are organizational: card schedules, progress, and
+  review history are preserved.
 
-1. Pick or create a deck. List existing decks first so you reuse one instead of making a
-   near-duplicate. Create a new deck only when nothing fits.
-2. Draft a short, selective shortlist of candidate cards (basic and/or cloze).
-3. Show them to the user with the target deck and let them choose what to keep.
-4. Create only the cards they kept.
+After creating or reorganizing structured material, call `list_topics` again and report the resulting
+order, progress, and locked/unlocked state. If the result differs from the proposal, say so.
 
-## Tools
+## Write good cards
 
-The `recallfox` MCP server exposes deck and card operations: list decks, create a deck,
-create a **basic** front/back card, and create a **cloze** `[bracketed]` card. Discover the
-exact tool names and arguments from the connected server rather than assuming them, and
-prefer reusing an existing deck over creating one.
+- **Basic:** a distinct prompt and answer. Use when knowledge is naturally a question.
+- **Cloze:** a sentence with hidden words in `[square brackets]`. Use when a word or phrase belongs in
+  meaningful sentence context.
+- Keep one idea per card, the smallest sufficient answer, and enough context to make sense months
+  later. Test recall rather than recognition.
+- Prefer 5 sharp cards over 20 padded ones. Do not create duplicates of cards found during inspection.
+- When editing cloze content, avoid changing blank count/order if that could misattribute history.
+
+## Default capture workflow
+
+1. Inspect relevant decks, topics, access state, and existing cards.
+2. Draft a selective card shortlist.
+3. Choose the least-disruptive placement and, when needed, a proposed topic split/order.
+4. Show the user the cards, target placement, and access consequence (for example, “this topic is
+   locked, so these new cards will wait”). Ask for one confirmation.
+5. Apply only the accepted card and structural changes.
+6. Re-read topics and summarize what changed, including resulting lock state.
+
+## MCP tools
+
+- Inspect: `list_decks`, `list_topics`, `list_cards`.
+- Create: `create_deck`, `create_topic`, `create_basic_card`, `create_cloze_card`.
+- Organize paths: `update_topic`, `delete_topic`, `reorder_topics`,
+  `configure_learning_path`, `study_ahead`.
+- Organize cards: `assign_cards_to_topic`, `move_cards_to_deck`.
+- Maintain cards: `update_basic_card`, `update_cloze_card`, `delete_card`.
+
+Use note ids returned by `list_cards` or create tools for update, assignment, move, and delete calls.
+Use the exact connected tool schemas rather than guessing arguments.
+
+## Vocabulary
+
+**Recall** is scheduled review and updates FSRS. **Practice** is cram mode and does not reschedule.
+Use “retention”, “learned”, “leeches”, and “maturity”; never substitute “mastery”.
