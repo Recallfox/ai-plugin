@@ -28,14 +28,23 @@ recallfox currently exposes decks and exactly-one topic membership, not tags. Do
 
 ## Card quality
 
-- Basic cards use a distinct prompt and answer. Cloze cards hide answers in `[square brackets]`.
-- One durable idea per card; minimal answer; context-free months later; test recall, not recognition.
+- Choose the retrieval behavior first and show the proposed type. Use Basic when the learner should
+  produce an answer unaided; Cloze for an exact word or phrase in meaningful sentence context; and
+  Options only when discriminating among plausible alternatives is itself the useful skill.
+- Options are not easier Basic cards. Use three or four parallel choices when possible (two to four
+  are supported), exactly one unambiguous answer, and only genuine distractors. Never invent facts
+  just to fill choices; fall back to Basic when strong distractors do not exist. The back should
+  explain the answer and, when useful, distinguish the closest distractor. Show all choices, the
+  correct answer, and the explanation in the proposal.
+- One durable idea per card; minimal answer; context-free months later. Prefer unaided recall; use
+  recognition only when discrimination is the learning objective.
 - Prefer a few strong cards to broad filler. Zero cards is a valid outcome.
 
 ## Tools
 
 - Inspect: `list_decks`, `list_topics`, `list_cards`.
-- Create: `create_deck`, `create_topic`, `create_basic_card`, `create_cloze_card`.
+- Create: `create_deck`, `create_topic`, `create_basic_card`, `create_cloze_card`,
+  `create_choice_card`.
 - Organize: `update_topic`, `delete_topic`, `reorder_topics`, `configure_learning_path`,
   `study_ahead`, `assign_cards_to_topic`, `move_cards_to_deck`.
 - Maintain: `update_basic_card`, `update_cloze_card`, `delete_card`.

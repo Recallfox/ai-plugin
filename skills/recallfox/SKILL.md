@@ -72,20 +72,44 @@ ideas, General or an existing topic is usually better than new structure.
 After creating or reorganizing structured material, call `list_topics` again and report the resulting
 order, progress, and locked/unlocked state. If the result differs from the proposal, say so.
 
-## Write good cards
+## Choose the right card type
 
-- **Basic:** a distinct prompt and answer. Use when knowledge is naturally a question.
-- **Cloze:** a sentence with hidden words in `[square brackets]`. Use when a word or phrase belongs in
-  meaningful sentence context.
+Choose the retrieval behavior first; card type is part of card quality, not a formatting choice.
+Name the proposed type so the user can judge it.
+
+- **Basic — produce the answer unaided:** use for explanations, definitions, causes, procedures,
+  commands, and ordinary question-answer knowledge. This is the default when direct recall is the
+  real skill.
+- **Cloze — complete meaningful context:** use when recalling an exact word or short phrase inside a
+  sentence provides a useful cue. Hide answers in `[square brackets]`; do not use cloze merely to
+  turn a list into many weak cards.
+- **Options — discriminate among plausible alternatives:** use for classification, diagnosis,
+  commonly confused concepts, or a naturally closed set where choosing the right alternative is
+  itself transferable knowledge. Options are not an easier version of a Basic card.
+
+For an Options card:
+
+- Prefer three or four choices; the API permits two to four.
+- Keep choices parallel in category, grammar, and specificity. Every distractor must be plausible,
+  independently false, and useful for exposing a real confusion. Exactly one answer must be
+  unambiguously correct.
+- Never invent unsupported facts solely to fill distractor slots. Avoid joke answers, overlapping
+  answers, and “all/none of the above.” If strong distractors do not exist, use Basic instead.
+- Put the question on `front`, complete answer choices in `options`, and the zero-based authored-list
+  answer index in `correct_option`. Use `back` to explain why the answer is correct and, when useful,
+  distinguish the closest distractor; do not merely repeat the correct option.
+- In the proposal, show every choice, mark the correct answer, and include the explanation. Do not
+  hide the answer from the user during authoring review.
+
 - Keep one idea per card, the smallest sufficient answer, and enough context to make sense months
-  later. Test recall rather than recognition.
+  later. Prefer unaided recall; use recognition only when discrimination is the learning objective.
 - Prefer 5 sharp cards over 20 padded ones. Do not create duplicates of cards found during inspection.
 - When editing cloze content, avoid changing blank count/order if that could misattribute history.
 
 ## Default capture workflow
 
 1. Inspect relevant decks, topics, access state, and existing cards.
-2. Draft a selective card shortlist.
+2. Draft a selective card shortlist and choose the retrieval-appropriate type for each card.
 3. Choose the least-disruptive placement and, when needed, a proposed topic split/order.
 4. Show the user the cards, target placement, and access consequence (for example, “this topic is
    locked, so these new cards will wait”). Ask for one confirmation.
@@ -95,7 +119,8 @@ order, progress, and locked/unlocked state. If the result differs from the propo
 ## MCP tools
 
 - Inspect: `list_decks`, `list_topics`, `list_cards`.
-- Create: `create_deck`, `create_topic`, `create_basic_card`, `create_cloze_card`.
+- Create: `create_deck`, `create_topic`, `create_basic_card`, `create_cloze_card`,
+  `create_choice_card`.
 - Organize paths: `update_topic`, `delete_topic`, `reorder_topics`,
   `configure_learning_path`, `study_ahead`.
 - Organize cards: `assign_cards_to_topic`, `move_cards_to_deck`.

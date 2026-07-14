@@ -7,7 +7,8 @@ Target: {{args}}
 
 If no target is given, use the most recent substantive thing from this conversation worth
 remembering. Follow the recallfox guidance: inspect relevant decks, topics, progress, lock state,
-and existing cards; propose atomic cards plus their least-disruptive placement; explain if a locked
-topic will delay introduction; and create or reorganize only after I confirm. Re-read the path after
-changes and summarize the resulting order and access.
+and existing cards; choose and show the retrieval-appropriate Basic, Cloze, or Options type for each
+atomic card; propose their least-disruptive placement; explain if a locked topic will delay
+introduction; and create or reorganize only after I confirm. Re-read the path after changes and
+summarize the resulting order and access.
 """

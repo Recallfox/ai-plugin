@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "The recallfox plugin: turn anything you learn with your AI into durable memory.",
-    "version": "0.1.0"
+    "version": "0.3.0"
   },
   "plugins": [
     {
       "name": "recallfox",
       "source": "./",
-      "description": "Create decks and cards in recallfox from any conversation. Bundles the recallfox MCP connector plus skills and commands for capturing what you learn."
+      "description": "Create well-formed Basic, Cloze, and Options cards in recallfox from any conversation. Bundles the recallfox MCP connector plus skills and commands for capturing what you learn."
     }
   ]
 }

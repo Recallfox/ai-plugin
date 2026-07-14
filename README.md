@@ -23,8 +23,8 @@ spaced-repetition scheduler resurface them over time so the knowledge actually s
   - create/update/delete/reorder topics and configure or study ahead in a Learning Path;
   - create/update/delete cards, assign them to topics, and move them across decks.
 - **Skill** (`recallfox`) teaches the agent when and how to capture what you learn as
-  well-formed, atomic cards; reuse existing structure; reason about locked topics and retention;
-  and ask before making structural changes.
+  well-formed Basic, Cloze, or Options cards; choose the retrieval-appropriate type; reuse existing
+  structure; reason about locked topics and retention; and ask before making structural changes.
 - **Commands**
   - `/recallfox:recall-this [topic]` capture the conversation (or a topic) into cards.
 
