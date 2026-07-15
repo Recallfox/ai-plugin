@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "The recallfox plugin: turn anything you learn with your AI into durable memory.",
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "plugins": [
     {

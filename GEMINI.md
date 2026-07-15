@@ -23,6 +23,7 @@ recallfox currently exposes decks and exactly-one topic membership, not tags. Do
 - Tell the user when new cards are being placed in a locked topic. Never silently study ahead.
 - Ask before creating/renaming/deleting/reordering topics, moving existing cards, configuring the
   Learning Path, or studying ahead.
+- Ask before changing an existing deck's name, emoji, or description.
 - Reassignment and cross-deck moves preserve schedules, progress, and review history.
 - Retention is context, not “mastery” and not a reason by itself to restructure a deck.
 
@@ -45,7 +46,7 @@ recallfox currently exposes decks and exactly-one topic membership, not tags. Do
 - Inspect: `list_decks`, `list_topics`, `list_cards`.
 - Create: `create_deck`, `create_topic`, `create_basic_card`, `create_cloze_card`,
   `create_choice_card`.
-- Organize: `update_topic`, `delete_topic`, `reorder_topics`, `configure_learning_path`,
+- Organize: `update_deck`, `update_topic`, `delete_topic`, `reorder_topics`, `configure_learning_path`,
   `study_ahead`, `assign_cards_to_topic`, `move_cards_to_deck`.
 - Maintain: `update_basic_card`, `update_cloze_card`, `delete_card`.
 

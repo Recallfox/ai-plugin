@@ -14,6 +14,7 @@ The user authorizes the connector once; every tool is scoped to their account.
 - Never create cards silently. Show the proposed cards and placement, then create only what the user
   accepts. An explicit request to create specific cards is consent for those cards, but not for
   unrelated restructuring.
+- Ask before changing an existing deck's name, emoji, or description.
 - Ask before creating, renaming, deleting, splitting, or reordering topics; moving existing cards;
   enabling/disabling a Learning Path; changing its threshold; or unlocking a topic early.
 - A single combined proposal is enough: show the target deck/topic, cards, and any structural change
@@ -121,7 +122,7 @@ For an Options card:
 - Inspect: `list_decks`, `list_topics`, `list_cards`.
 - Create: `create_deck`, `create_topic`, `create_basic_card`, `create_cloze_card`,
   `create_choice_card`.
-- Organize paths: `update_topic`, `delete_topic`, `reorder_topics`,
+- Organize decks and paths: `update_deck`, `update_topic`, `delete_topic`, `reorder_topics`,
   `configure_learning_path`, `study_ahead`.
 - Organize cards: `assign_cards_to_topic`, `move_cards_to_deck`.
 - Maintain cards: `update_basic_card`, `update_cloze_card`, `delete_card`.
