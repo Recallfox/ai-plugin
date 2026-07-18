@@ -73,6 +73,18 @@ ideas, General or an existing topic is usually better than new structure.
 After creating or reorganizing structured material, call `list_topics` again and report the resulting
 order, progress, and locked/unlocked state. If the result differs from the proposal, say so.
 
+## Author high-quality cards
+
+Before choosing a card type:
+
+- Capture one durable idea per card. Give the front enough context to remain clear months later and
+  keep the answer to the smallest sufficient explanation.
+- Prefer retrieval over recognition. If the learner should produce or explain the answer unaided,
+  use Basic rather than turning it into an easier Options card.
+- Skip trivia, filler, duplicates, and details useful only in the current conversation. Prefer 5
+  sharp cards over 20 padded ones.
+- In a batch, vary phrasing and answer positions without changing the knowledge being tested.
+
 ## Choose the right card type
 
 Choose the retrieval behavior first; card type is part of card quality, not a formatting choice.
@@ -88,29 +100,63 @@ Name the proposed type so the user can judge it.
   commonly confused concepts, or a naturally closed set where choosing the right alternative is
   itself transferable knowledge. Options are not an easier version of a Basic card.
 
-For an Options card:
+### Basic card quality
 
-- Prefer three or four choices; the API permits two to four.
-- Keep choices parallel in category, grammar, and specificity. Every distractor must be plausible,
-  independently false, and useful for exposing a real confusion. Exactly one answer must be
-  unambiguously correct.
-- Never invent unsupported facts solely to fill distractor slots. Avoid joke answers, overlapping
-  answers, and “all/none of the above.” If strong distractors do not exist, use Basic instead.
+- Ask for one specific fact, explanation, cause, or procedure. Split compound questions into cards.
+- Include the subject, scope, and conditions needed to answer without the original conversation.
+- Avoid vague fronts such as “Explain this” and prompts broad enough to accept many answers.
+- Make the back direct and minimal, but include the key reason or distinction when it prevents confusion.
+- Create a reversed card only when recalling the relationship in both directions is independently useful.
+
+### Cloze card quality
+
+- Write a self-contained, natural sentence whose meaning remains clear with the answer hidden.
+- Hide the smallest meaningful word or phrase; do not test trivial grammar or blank most of a sentence.
+- Ensure the context permits one intended answer and does not reveal it through repetition or grammar.
+- Use multiple blanks only when the items form one meaningful unit; otherwise split them into cards.
+- When editing, preserve blank count and order if changing them could misattribute review history.
+
+### Options card quality
+
+- Use Options only when distinguishing plausible alternatives is the learning objective. Definitions
+  and explanations normally belong in Basic cards.
+- Make the question answerable before reading the choices. Include the facts or decision criterion
+  needed to resolve words such as “best,” “usually,” or “most appropriate.”
+- Prefer three or four choices. Draw every choice from the same conceptual category and keep grammar,
+  length, tone, and specificity parallel.
+- Make each distractor a realistic misconception or near-neighbor concept. Require at least two
+  plausible distractors; otherwise use Basic.
+- Reject a card if the answer is exposed by being the only serious, precise, long, or grammatically
+  matching option. Avoid absurd choices, invented facts, overlaps, and “all/none of the above.”
+- Across a batch, distribute the correct option positions; do not create a predictable answer pattern.
+- Require exactly one unambiguously correct answer under the stated scenario.
 - Put the question on `front`, complete answer choices in `options`, and the zero-based authored-list
   answer index in `correct_option`. Use `back` to explain why the answer is correct and, when useful,
-  distinguish the closest distractor; do not merely repeat the correct option.
+  why the closest distractor is wrong; do not merely repeat the correct option.
 - In the proposal, show every choice, mark the correct answer, and include the explanation. Do not
   hide the answer from the user during authoring review.
 
-- Keep one idea per card, the smallest sufficient answer, and enough context to make sense months
-  later. Prefer unaided recall; use recognition only when discrimination is the learning objective.
-- Prefer 5 sharp cards over 20 padded ones. Do not create duplicates of cards found during inspection.
-- When editing cloze content, avoid changing blank count/order if that could misattribute history.
+### Examples are illustrative, not templates
+
+Copy the quality standard, not the topic, wording, length, or structure. Questions may be shorter;
+answers and Options choices may be a phrase or one word when that is sufficient.
+
+- **Basic** — Front: “Why can a metal spoon feel colder than a wooden spoon in the same room?”
+  Back: “Metal transfers heat away from your hand faster; the spoons may be the same temperature.”
+- **Cloze** — “Plants convert light energy into chemical energy through [photosynthesis].”
+- **Options** — Front: “Which planet has the shortest year?” Options: “Mercury” **(correct)**,
+  “Venus,” “Earth,” “Mars.” Back: “Mercury completes an orbit in about 88 Earth days.”
+- **Options, scenario-based** — Front: “Bread dough stays dense after adequate kneading. The yeast
+  was mixed with near-boiling water and produced no bubbles. What is the most likely cause?” Options:
+  “The yeast was killed by excessive heat” **(correct)**, “The gluten network was underdeveloped,”
+  “Fermentation was slowed by a cold environment,” “The flour absorbed too little water.” Back:
+  “Near-boiling water can kill yeast, preventing the gas production needed for the dough to rise.”
 
 ## Default capture workflow
 
 1. Inspect relevant decks, topics, access state, and existing cards.
-2. Draft a selective card shortlist and choose the retrieval-appropriate type for each card.
+2. Draft a selective shortlist and apply the matching quality gate. Rewrite unclear Basic or Cloze
+   cards; convert weak Options cards to Basic instead of padding them with obvious distractors.
 3. Choose the least-disruptive placement and, when needed, a proposed topic split/order.
 4. Show the user the cards, target placement, and access consequence (for example, “this topic is
    locked, so these new cards will wait”). Ask for one confirmation.
