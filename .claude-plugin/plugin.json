@@ -1,7 +1,7 @@
 {
   "name": "recallfox",
-  "version": "0.4.0",
-  "description": "Push what you learn into recallfox, your spaced-repetition retention layer. Create decks and cards from any conversation, straight from Claude Code or Codex.",
+  "version": "0.5.0",
+  "description": "Push what you learn into recallfox, your spaced-repetition retention layer. Create decks and cards from any AI-agent conversation.",
   "author": {
     "name": "recallfox",
     "url": "https://recallfox.com"

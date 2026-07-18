@@ -1,0 +1,13 @@
+name: recallfox
+version: 0.5.0
+description: >
+  Turn durable knowledge from Hermes conversations into well-formed recallfox
+  spaced-repetition cards, organized across decks, topics, and Learning Paths.
+author: recallfox
+license: MIT
+homepage: https://recallfox.com
+
+# The shared skill is registered from ../skills/ by __init__.py.
+provides_skills:
+  - recallfox
+

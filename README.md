@@ -6,7 +6,8 @@
 
 **Turn anything you learn with your AI into durable memory.**
 
-The official [recallfox](https://recallfox.com) plugin for Claude Code, Codex, Cursor, and Gemini CLI.
+The official [recallfox](https://recallfox.com) plugin for Claude Code, Codex, Cursor, Gemini CLI,
+and Hermes Agent.
 
 <sub>recallfox is the retention layer you push into. This plugin is the push.</sub>
 
@@ -69,6 +70,27 @@ card-writing guidance:
 gemini extensions install https://github.com/Recallfox/ai-plugin
 ```
 
+### Hermes Agent
+
+Install the Hermes adapter, which registers the shared recallfox skill as
+`recallfox:recallfox`, then enable it:
+
+```
+curl -fsSL https://raw.githubusercontent.com/Recallfox/ai-plugin/main/.hermes-plugin/install.sh | bash
+hermes plugins enable recallfox
+```
+
+Then add the recallfox MCP server with OAuth and sign in:
+
+```
+hermes mcp add recallfox --url https://app.recallfox.com/api/v1/mcp --auth oauth
+hermes mcp login recallfox
+```
+
+Start a new Hermes session and ask it to load `recallfox:recallfox` with `skill_view` before
+capturing cards. Hermes keeps plugin skills namespaced and opt-in, while the MCP connection exposes
+the recallfox deck, topic, Learning Path, and card tools.
+
 ### Other MCP clients (fallback)
 
 Any MCP client can point directly at `https://app.recallfox.com/api/v1/mcp`. Clients that
@@ -89,11 +111,15 @@ ai-plugin/
     plugin.json         Codex manifest (full interface block; shares skills/ + .mcp.json)
   .cursor-plugin/
     plugin.json         Cursor manifest (registers the MCP connector)
+  .hermes-plugin/
+    plugin.yaml         Hermes Agent manifest
+    __init__.py         registers the shared skill
+    install.sh          clone/update and symlink installer
   gemini-extension.json Gemini CLI extension (mcp-remote bridge)
   GEMINI.md             Gemini context file (card-writing guidance)
   .mcp.json             recallfox MCP connector (dotted, shared)
   mcp.json              recallfox MCP connector (non-dotted duplicate, some clients)
-  skills/recallfox/     when + how to capture cards (Claude Code, Codex)
+  skills/recallfox/     when + how to capture cards (Claude Code, Codex, Hermes)
   commands/             slash commands (.md for Claude Code, .toml for Gemini)
 ```
 
@@ -103,4 +129,5 @@ There is no release process. The repo is the distribution, so shipping an update
 just commit and push to `main`. Optionally bump `version` in the manifests (semver) when
 the change is worth signalling.
 
-Anyone who has it installed picks up the change with `/plugin marketplace update recallfox`.
+Claude Code users pick up the change with `/plugin marketplace update recallfox`. Hermes users
+re-run the `.hermes-plugin/install.sh` command above, then start a new session.
