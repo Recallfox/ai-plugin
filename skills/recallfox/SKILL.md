@@ -18,7 +18,8 @@ The user authorizes the connector once; every tool is scoped to their account.
   that Lesson; otherwise offer it once and wait. Lesson and card consent are independent.
 - Ask before changing an existing deck's name, emoji, or description.
 - Ask before creating, renaming, deleting, splitting, or reordering topics; moving existing cards;
-  enabling/disabling a Learning Path; changing its threshold; or unlocking a topic early.
+  disabling an existing Learning Path; changing an existing path's threshold; or unlocking a topic
+  early. Enabling progressive disclosure may be proactive under the guidance below.
 - A single combined proposal is enough: show the target deck/topic, cards, and any structural change
   together. Do not make the user approve every tool call separately.
 - Zero cards is a valid result. Skip filler, trivia, and conversation-specific details.
@@ -75,14 +76,23 @@ flow, or distinction understandable through examples and optional interaction.
 
 ## Respect Learning Path access
 
+- Evaluate whether progressive disclosure fits the deck instead of waiting for the user to raise it.
+  It usually makes sense when the deck has more than three meaningful topics or roughly 30–40
+  cards, especially when later material depends on earlier material. Treat these as heuristics, not
+  hard cutoffs; use the topic structure, card relationships, and likely study burden to decide.
+- When progressive disclosure clearly helps, enable it without requiring advance confirmation.
+  Explain the reasoning and resulting access changes afterward, then ask whether the user would
+  prefer it disabled or configured differently. When it does not help, leave it disabled, explain
+  why, and ask whether the user wants to enable it anyway.
 - Topic order gates only the introduction of **new** cards. Started and due cards keep their FSRS
   schedules and remain accessible.
 - If the chosen topic is locked, tell the user the new cards will wait until that topic unlocks. Do
   not silently use `study_ahead` to bypass the path.
 - `reorder_topics` changes future introduction order but preserves schedules and ordinary unlock
   history. Always pass every topic id exactly once.
-- `configure_learning_path` is an explicit access rebase. It may change which unseen topics are
-  locked under the current order/progress. Use it only after explicit consent.
+- `configure_learning_path` is an access rebase that may change which unseen topics are locked under
+  the current order/progress. Proactive enabling is allowed under the heuristic above; get explicit
+  consent before disabling an existing path or changing its existing threshold.
 - Retention describes successful learned-card reviews; it is useful context, not proof that a topic
   is mastered and not a reason by itself to reorganize the deck.
 - `assign_cards_to_topic` and `move_cards_to_deck` are organizational: card schedules, progress, and

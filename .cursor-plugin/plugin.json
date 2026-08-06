@@ -1,7 +1,7 @@
 {
   "name": "recallfox",
   "displayName": "recallfox",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Create interactive Lessons and durable spaced-repetition cards in recallfox.",
   "author": {
     "name": "recallfox",
