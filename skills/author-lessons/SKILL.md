@@ -23,7 +23,8 @@ purpose-made teaching experience attached to a topic, not a prose dump, slide de
 ## Inspect before designing
 
 1. Use `list_decks` and `list_topics` to find the least-disruptive placement and access state.
-2. Use `list_cards` to understand what the topic already teaches and avoid restating its prompts.
+2. Use `list_cards` to inspect every card in the target topic and the cards in earlier topics. Use
+   them to establish required coverage and prior knowledge without restating their prompts.
 3. Use `list_lessons` on the likely topic and `get_lesson` for relevant existing Lessons. Avoid a
    duplicate objective and match the learner's current depth and vocabulary.
 4. Reuse a cohesive existing topic. Propose a new topic only when the concept is a distinct stage
@@ -37,6 +38,19 @@ that topic enters the Learning Path. Never study ahead or change path settings i
 Start with the learning objective: what should become understandable that was not understandable
 before? Teach one objective per Lesson. Prefer two to five short steps and roughly five to ten
 minutes, but let the concept determine the structure.
+
+### Important: topic cards are the minimum teaching scope
+
+- The Lesson must, at minimum, teach the knowledge needed to understand and answer every card in
+  its target topic. Do not omit a card's underlying knowledge merely to keep the Lesson shorter.
+- Cover the knowledge, not the card wording. Do not turn the Lesson into a walkthrough or repetition
+  of card prompts. If the required coverage cannot fit one coherent objective, propose multiple
+  Lessons rather than silently leaving cards uncovered.
+- The Lesson may go a little beyond this minimum when an explanation, example, or connection makes
+  the required knowledge easier to understand. Keep the extension relevant and proportionate.
+- A relevant prerequisite that earlier topics do not cover is useful to include, but is a
+  nice-to-have rather than required coverage. Prerequisites already taught in earlier topics may be
+  assumed or connected briefly instead of being taught again.
 
 Favor this sequence when it fits:
 
