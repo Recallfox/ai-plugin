@@ -13,19 +13,23 @@ and Hermes Agent.
 
 </div>
 
-Create decks and cards in recallfox without leaving your terminal, and let the
-spaced-repetition scheduler resurface them over time so the knowledge actually sticks.
+Create interactive Lessons, decks, and cards in recallfox without leaving your terminal. Teach a
+new idea through examples, then let spaced repetition resurface it so the knowledge actually sticks.
 
 ## What's inside
 
 - **MCP connector** (`recallfox`) connects to the remote recallfox MCP server and exposes
-  deck, topic, Learning Path, and card operations, scoped to your account over OAuth:
-  - inspect decks, retention, topics, progress/access, and existing cards;
+  deck, topic, Learning Path, Lesson, and card operations, scoped to your account over OAuth:
+  - inspect decks, retention, topics, progress/access, existing Lessons, and cards;
   - create/update/delete/reorder topics and configure or study ahead in a Learning Path;
+  - create/update/delete/reorder interactive Lessons and their HTML steps;
   - create/update/delete cards, assign them to topics, and move them across decks.
-- **Skill** (`recallfox`) teaches the agent when and how to capture what you learn as
-  well-formed Basic, Cloze, or Options cards; choose the retrieval-appropriate type; reuse existing
-  structure; reason about locked topics and retention; and ask before making structural changes.
+- **Skills** teach the agent how to retain and teach what you learn:
+  - `recallfox` captures durable ideas as well-formed Basic, Cloze, or Options cards, chooses the
+    retrieval-appropriate type, reuses existing structure, reasons about locked topics and
+    retention, and asks before making changes;
+  - `author-lessons` creates focused, phone-friendly teaching experiences using sandboxed HTML,
+    optional self-hosted libraries, examples, visual flows, and meaningful interaction.
 - **Commands**
   - `/recallfox:recall-this [topic]` capture the conversation (or a topic) into cards.
 
@@ -33,7 +37,7 @@ spaced-repetition scheduler resurface them over time so the knowledge actually s
 
 ### Claude Code
 
-Install the full plugin (MCP connector + skill + commands) from this repo:
+Install the full plugin (MCP connector + skills + commands) from this repo:
 
 ```
 /plugin marketplace add Recallfox/ai-plugin
@@ -64,7 +68,7 @@ browser OAuth on first use. No API key needed.
 ### Gemini CLI
 
 Gemini installs the connector through the `mcp-remote` bridge and reads `GEMINI.md` for the
-card-writing guidance:
+Lesson and card-authoring guidance:
 
 ```
 gemini extensions install https://github.com/Recallfox/ai-plugin
@@ -72,8 +76,7 @@ gemini extensions install https://github.com/Recallfox/ai-plugin
 
 ### Hermes Agent
 
-Install the Hermes adapter, which registers the shared recallfox skill as
-`recallfox:recallfox`, then enable it:
+Install the Hermes adapter, which registers the shared RecallFox skills, then enable it:
 
 ```
 curl -fsSL https://raw.githubusercontent.com/Recallfox/ai-plugin/main/.hermes-plugin/install.sh | bash
@@ -88,8 +91,9 @@ hermes mcp login recallfox
 ```
 
 Start a new Hermes session and ask it to load `recallfox:recallfox` with `skill_view` before
-capturing cards. Hermes keeps plugin skills namespaced and opt-in, while the MCP connection exposes
-the recallfox deck, topic, Learning Path, and card tools.
+capturing cards. Load `recallfox:author-lessons` before authoring interactive Lessons. Hermes keeps
+plugin skills namespaced and opt-in, while the MCP connection exposes the recallfox deck, topic,
+Learning Path, Lesson, and card tools.
 
 ### Other MCP clients (fallback)
 
@@ -113,13 +117,14 @@ ai-plugin/
     plugin.json         Cursor manifest (registers the MCP connector)
   .hermes-plugin/
     plugin.yaml         Hermes Agent manifest
-    __init__.py         registers the shared skill
+    __init__.py         registers the shared skills
     install.sh          clone/update and symlink installer
   gemini-extension.json Gemini CLI extension (mcp-remote bridge)
-  GEMINI.md             Gemini context file (card-writing guidance)
+  GEMINI.md             Gemini context file (Lesson + card guidance)
   .mcp.json             recallfox MCP connector (dotted, shared)
   mcp.json              recallfox MCP connector (non-dotted duplicate, some clients)
-  skills/recallfox/     when + how to capture cards (Claude Code, Codex, Hermes)
+  skills/recallfox/     when + how to capture durable knowledge
+  skills/author-lessons/ lesson pedagogy, sandbox runtime, libraries, and examples
   commands/             slash commands (.md for Claude Code, .toml for Gemini)
 ```
 

@@ -1,7 +1,7 @@
 {
   "name": "recallfox",
-  "version": "0.5.1",
-  "description": "Push what you learn into recallfox, your spaced-repetition retention layer.",
+  "version": "0.6.0",
+  "description": "Learn interactively, then retain durable knowledge with recallfox.",
   "author": {
     "name": "recallfox",
     "url": "https://recallfox.com"
@@ -19,8 +19,8 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "recallfox",
-    "shortDescription": "Turn what you learn into spaced-repetition cards",
-    "longDescription": "Create decks and cards in recallfox from any conversation. Spaced repetition resurfaces them over time so the knowledge sticks.",
+    "shortDescription": "Turn learning into Lessons and durable cards",
+    "longDescription": "Create interactive Lessons, decks, and cards in recallfox from any conversation. Learn through examples, then use spaced repetition so the knowledge sticks.",
     "developerName": "recallfox",
     "category": "Productivity",
     "capabilities": [
@@ -31,7 +31,7 @@
     "defaultPrompt": [
       "List my recallfox decks",
       "Turn what we just covered into cards",
-      "Choose the right card types for what I learned"
+      "Build an interactive Lesson for what I learned"
     ],
     "brandColor": "#f06a26",
     "logo": "./assets/mascot.svg"

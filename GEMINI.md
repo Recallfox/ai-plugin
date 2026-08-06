@@ -1,7 +1,7 @@
 # recallfox
 
-Use the recallfox MCP connector to turn durable knowledge into spaced-repetition cards and place it
-coherently in the user's decks and topics.
+Use the recallfox MCP connector to teach durable ideas through optional interactive Lessons, then
+turn them into spaced-repetition cards and place them coherently in the user's decks and topics.
 
 ## Structure-aware capture
 
@@ -16,6 +16,24 @@ coherently in the user's decks and topics.
 5. After changes, call `list_topics` again and report the resulting order and access state.
 
 recallfox currently exposes decks and exactly-one topic membership, not tags. Do not invent tag data.
+
+## Interactive Lessons
+
+When the user has just learned durable material and an example, flow, or manipulable model would add
+real value, offer once to add a short interactive Lesson to the relevant topic so they can replay it
+from the Learning Path. Wait for confirmation. Do not offer again after a decline, and never create
+cards and a Lesson under one ambiguous consent.
+
+Before authoring, inspect existing cards and Lessons with `list_cards`, `list_lessons`, and
+`get_lesson`. Use the `author-lessons` skill. Lessons should teach one coherent objective through
+examples and optional meaningful interaction. They are not quiz gauntlets: zero questions is valid,
+and one or two checks are enough when they surface an important misconception.
+
+Each step is body HTML with inline CSS/JavaScript and an explicit optional library list. Supported
+ids are `alpine`, `motion`, `interact`, `katex`, `d3`, `cytoscape`, `p5`, and `mermaid`; pass `[]`
+when native browser code is enough. Never add CDNs or network dependencies. Design for the 393 × 852
+phone viewport, 320px minimum width, fluid height, touch and keyboard access, and no horizontal
+scrolling. RecallFox owns Back, Continue, progress, and completion outside the frame.
 
 ## Learning Path rules
 
@@ -49,6 +67,9 @@ recallfox currently exposes decks and exactly-one topic membership, not tags. Do
 - Organize: `update_deck`, `update_topic`, `delete_topic`, `reorder_topics`, `configure_learning_path`,
   `study_ahead`, `assign_cards_to_topic`, `move_cards_to_deck`.
 - Maintain: `update_basic_card`, `update_cloze_card`, `delete_card`.
+- Lessons: `list_lessons`, `get_lesson`, `create_lesson`, `update_lesson`, `add_lesson_step`,
+  `update_lesson_step`, `reorder_lesson_steps`, `delete_lesson_step`, `reorder_lessons`,
+  `delete_lesson`.
 
 Use returned note ids for update, assignment, move, and delete operations. Recall is scheduled review
 that updates FSRS; Practice is cram mode and does not reschedule.

@@ -1,6 +1,6 @@
 ---
 name: recallfox
-description: Capture and organize durable knowledge in recallfox using decks, topics, Learning Paths, and spaced-repetition cards. Use when the user asks to remember something, make cards, organize cards or topics, inspect learning progress, or says "add this to recallfox" or "recall this".
+description: Capture and organize durable knowledge in recallfox using decks, topics, Learning Paths, interactive Lessons, and spaced-repetition cards. Use when the user asks to remember something, make cards or Lessons, organize or inspect their learning, says "add this to recallfox" or "recall this", or finishes learning durable material that may be worth retaining.
 ---
 
 # recallfox
@@ -14,6 +14,8 @@ The user authorizes the connector once; every tool is scoped to their account.
 - Never create cards silently. Show the proposed cards and placement, then create only what the user
   accepts. An explicit request to create specific cards is consent for those cards, but not for
   unrelated restructuring.
+- Never create a Lesson silently. An explicit request to create a specified Lesson is consent for
+  that Lesson; otherwise offer it once and wait. Lesson and card consent are independent.
 - Ask before changing an existing deck's name, emoji, or description.
 - Ask before creating, renaming, deleting, splitting, or reordering topics; moving existing cards;
   enabling/disabling a Learning Path; changing its threshold; or unlocking a topic early.
@@ -54,6 +56,22 @@ only if there is a clear conceptual seam. Never manufacture topics merely to sat
 
 For a large capture, propose topic grouping and order before creating cards. For one or two durable
 ideas, General or an existing topic is usually better than new structure.
+
+## Offer a Lesson when teaching would help
+
+Cards retain knowledge after it has become understandable. A Lesson can first make a new mechanism,
+flow, or distinction understandable through examples and optional interaction.
+
+- When the user has just learned durable new material, and a replayable teaching experience would
+  genuinely help, offer one concise next step: “I can also add a short interactive Lesson to
+  **<topic>** so you can explore it now and replay it from the Learning Path later. Want me to create
+  it?” Then wait.
+- Do not offer for a trivial fact, a simple storage request, material the user already knows, or after
+  the user declines or explicitly asks not to save it.
+- Reuse the least-disruptive topic. If a new topic is warranted, include it in the same proposal and
+  obtain confirmation before creating it.
+- If the user requests or accepts a Lesson, use the companion `author-lessons` skill. It owns lesson
+  pedagogy, sandbox HTML, responsive design, optional libraries, and the Lesson MCP workflow.
 
 ## Respect Learning Path access
 
@@ -162,6 +180,8 @@ answers and Options choices may be a phrase or one word when that is sufficient.
    locked, so these new cards will wait”). Ask for one confirmation.
 5. Apply only the accepted card and structural changes.
 6. Re-read topics and summarize what changed, including resulting lock state.
+7. If this was a learning conversation and an interactive explanation would add real value, make the
+   single optional Lesson offer described above. Do not create it in the card write without consent.
 
 ## MCP tools
 
@@ -172,6 +192,9 @@ answers and Options choices may be a phrase or one word when that is sufficient.
   `configure_learning_path`, `study_ahead`.
 - Organize cards: `assign_cards_to_topic`, `move_cards_to_deck`.
 - Maintain cards: `update_basic_card`, `update_cloze_card`, `delete_card`.
+- Lessons: `list_lessons`, `get_lesson`, `create_lesson`, `update_lesson`, `add_lesson_step`,
+  `update_lesson_step`, `reorder_lesson_steps`, `delete_lesson_step`, `reorder_lessons`,
+  `delete_lesson`. Follow the companion authoring skill before using Lesson write tools.
 
 Use note ids returned by `list_cards` or create tools for update, assignment, move, and delete calls.
 Use the exact connected tool schemas rather than guessing arguments.
