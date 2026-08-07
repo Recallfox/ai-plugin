@@ -81,6 +81,64 @@ Lesson. Interaction is preferred when it makes the mechanism observable, not as 
 - Prefer plain browser HTML, CSS, and JavaScript. Select a library only when it materially simplifies
   the teaching model or makes it clearer.
 
+### Make interactions discoverable
+
+- Use a range slider for a continuous quantity or many meaningful values. For two to four discrete
+  states, prefer labelled buttons, a segmented control, tabs, or Previous/Next controls so the
+  learner does not need a long or precise drag. If discrete slider stops are still the clearest
+  model, show labelled stops, snap exactly to them, and provide a tap/button alternative.
+- Make clickability visible before interaction. Use semantic controls with a distinct resting shape,
+  border, or fill; add hover, `:focus-visible`, pressed/selected, and disabled states; and use
+  `cursor: pointer` for enabled controls on pointer devices. Do not rely on color alone.
+- Put a short, specific action hint next to each meaningful interaction: “Tap a stage,” “Drag the
+  marker or use the arrow buttons,” “Choose an outcome,” or “Check the factors.” Prefer `Tap` over
+  `Click` when the same control is used on phones.
+- Do not hide the primary instruction in a tooltip. An info control may hold optional detail, but it
+  must open on tap and keyboard activation as well as hover/focus. Give it an accessible name and a
+  44 × 44 CSS-pixel target.
+- On phones, preserve visible control affordances and the action hint because hover is unavailable.
+  For tabs or segmented controls, keep every option labelled and the current selection obvious.
+- After interaction, update `aria-pressed` or `aria-selected` and provide immediate explanatory
+  feedback. Test the resting, hover/focus, active, and completed states at 393 × 852 and 320px wide.
+
+Use this native starter when optional interaction help is useful. The essential instruction remains
+visible; the info bubble adds detail and works without JavaScript:
+
+```html
+<div class="interaction-head">
+  <p class="action-hint"><span aria-hidden="true">☝</span> Tap a stage to compare.</p>
+  <details class="help">
+    <summary aria-label="How to use this interaction">i</summary>
+    <div class="help-pop">Tap any labelled stage. With a keyboard, use Tab and Enter.</div>
+  </details>
+</div>
+<style>
+  .interaction-head { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .action-hint { margin:0; color:var(--muted-foreground, #577770); font-weight:700; }
+  button, [role="button"], [role="tab"], .help summary { cursor:pointer; }
+  button { transition:background-color .15s ease, transform .15s ease, box-shadow .15s ease; }
+  button:hover { background:var(--secondary, #e6f3f1); box-shadow:0 3px 10px #0f766e24; }
+  button:active { transform:translateY(1px); }
+  button:focus-visible, .help summary:focus-visible {
+    outline:3px solid var(--ring, #0f766e); outline-offset:2px;
+  }
+  .help { position:relative; flex:0 0 auto; }
+  .help summary {
+    display:grid; place-items:center; width:44px; height:44px; list-style:none;
+    border:2px solid var(--border, #dcebe8); border-radius:50%; font-weight:900;
+  }
+  .help summary::-webkit-details-marker { display:none; }
+  .help-pop {
+    display:none; position:absolute; z-index:5; right:0; top:50px;
+    width:min(16rem, calc(100vw - 3.5rem)); padding:12px; border-radius:10px;
+    background:#0f2e2e; color:#fff; box-shadow:0 8px 22px #0f2e2e33;
+  }
+  .help[open] .help-pop, .help:hover .help-pop, .help:focus-within .help-pop { display:block; }
+  @media (hover:none) { .help:not([open]) .help-pop { display:none; } }
+  @media (prefers-reduced-motion:reduce) { button { transition:none; } }
+</style>
+```
+
 ## Build within the frame contract
 
 - Store a body fragment only. Do not emit `<!doctype>`, `<html>`, `<head>`, or `<body>`.

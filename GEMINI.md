@@ -35,6 +35,11 @@ when native browser code is enough. Never add CDNs or network dependencies. Desi
 phone viewport, 320px minimum width, fluid height, touch and keyboard access, and no horizontal
 scrolling. RecallFox owns Back, Continue, progress, and completion outside the frame.
 
+Make every interaction discoverable without hover: prefer labelled buttons or tabs over a slider
+for two to four discrete states, show a short visible action hint such as “Tap a stage,” and give
+enabled controls hover, focus, active, and pointer-cursor cues. Keep essential instructions visible;
+an info helper may contain optional detail only and must also open by tap and keyboard activation.
+
 ## Learning Path rules
 
 - Topic order gates only new-card introduction; started/due cards keep their FSRS schedules.

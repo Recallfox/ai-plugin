@@ -1,5 +1,5 @@
 name: recallfox
-version: 0.6.2
+version: 0.6.3
 description: >
   Turn Hermes conversations into interactive recallfox Lessons and durable
   spaced-repetition cards across decks, topics, and Learning Paths.
