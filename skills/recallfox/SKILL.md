@@ -195,13 +195,18 @@ answers and Options choices may be a phrase or one word when that is sufficient.
 
 ## Add images only when they teach
 
-- Use an image when spatial structure, a diagram, an artifact, or a visual comparison materially
-  improves learning. Do not decorate cards or Lessons with unrelated images.
+- Make every image earn its place. Use one when seeing the subject communicates appearance,
+  structure, spatial relationships, change, or real-world or historical context better than words
+  alone. Skip decorative or redundant images, and omit images when the card or Lesson already
+  teaches the idea clearly. Each image must serve a specific learning purpose.
 - Before importing an online image, inspect the actual image and its source page. Confirm that the
   user accepts the source and has a valid reuse basis. Never treat a search thumbnail as the source.
 - For an online image, call `import_image_from_url` with the original public HTTPS image URL. The
   remote server downloads, validates, normalizes, and stores it privately. Call `get_media_image`
   on the returned asset and verify that the stored normalized image is the intended one.
+- If direct URL import fails and the client has local file and network access, download the already
+  approved source to a temporary file and use the local image flow; do not claim this fallback in a
+  remote-only client.
 - For a local image, call local `inspect_local_image`. Pass its filename, size, and SHA-256 to remote
   `authorize_local_image_upload`. Then call local `upload_local_image` with the same path and the
   returned one-use token. Never quote, log, or reuse the token.

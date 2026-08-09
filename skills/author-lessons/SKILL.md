@@ -159,8 +159,12 @@ visible; the info bubble adds detail and works without JavaScript:
 
 ## Images
 
-Use an image only when it carries teaching value. Include its source, reuse basis, placement, alias,
-and alt text in the Lesson proposal. Follow the media workflow in the companion `recallfox` skill:
+Make every image earn its place. Use one when seeing the subject communicates appearance, structure,
+spatial relationships, change, or real-world or historical context better than words alone. Skip
+decorative or redundant images, and omit images when text or interaction already teaches the idea
+clearly. Each image must serve a specific learning purpose. Include its source, reuse basis,
+placement, alias, and alt text in the Lesson proposal. Follow the media workflow in the companion
+`recallfox` skill:
 import a reviewed public HTTPS image with `import_image_from_url`, or inspect and upload a local file
 through the one-use local helper flow. Call `get_media_image` before binding the result.
 
@@ -171,9 +175,10 @@ Bind each owned asset to the exact step with a lowercase hyphenated alias. Refer
 ```
 
 Pass the matching `media: [{"alias": "packet-flow", "asset_id": "..."}]` on that step. RecallFox
-injects private bytes into the sandbox and adds image expansion. Do not use `src` with an online,
-API, or S3 URL. Do not fetch images from step JavaScript. Use responsive image CSS such as
-`max-width: 100%; height: auto`.
+injects private bytes into the existing image and opens it in an expanded viewer when selected. It
+does not control the image's size or layout; author those with normal lesson HTML and CSS. Do not use
+`src` with an online, API, or S3 URL. Do not fetch images from step JavaScript. Use responsive image
+CSS such as `max-width: 100%; height: auto`.
 
 ## Runtime reference
 
