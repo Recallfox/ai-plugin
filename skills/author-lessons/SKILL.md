@@ -157,6 +157,24 @@ visible; the info bubble adds detail and works without JavaScript:
 - Do not fetch, submit, navigate, open windows, load external media, collect personal data, imitate
   trusted RecallFox prompts, or depend on cookies/storage. The sandbox intentionally blocks these.
 
+## Images
+
+Use an image only when it carries teaching value. Include its source, reuse basis, placement, alias,
+and alt text in the Lesson proposal. Follow the media workflow in the companion `recallfox` skill:
+import a reviewed public HTTPS image with `import_image_from_url`, or inspect and upload a local file
+through the one-use local helper flow. Call `get_media_image` before binding the result.
+
+Bind each owned asset to the exact step with a lowercase hyphenated alias. Reference it only as:
+
+```html
+<img data-rf-media-alias="packet-flow" alt="Packet moving through three network hops">
+```
+
+Pass the matching `media: [{"alias": "packet-flow", "asset_id": "..."}]` on that step. RecallFox
+injects private bytes into the sandbox and adds image expansion. Do not use `src` with an online,
+API, or S3 URL. Do not fetch images from step JavaScript. Use responsive image CSS such as
+`max-width: 100%; height: auto`.
+
 ## Runtime reference
 
 RecallFox wraps each stored step in a generated document and renders it in an iframe with
@@ -402,6 +420,10 @@ After any mutation, summarize the resulting Lesson and where the learner can fin
 - Revise: `update_lesson`, `update_lesson_step`.
 - Organize: `reorder_lesson_steps`, `reorder_lessons`.
 - Remove: `delete_lesson_step`, `delete_lesson`.
+- Media, remote: `import_image_from_url`, `get_media_metadata`, `get_media_image`,
+  `authorize_local_image_upload`.
+- Media, local helper: `inspect_local_image`, `upload_local_image`.
 
-Use the connected tool schemas rather than guessing arguments. Lesson authoring tools do not start,
-complete, skip, or reset the learner's progress.
+Every create/add/update step accepts optional `media` bindings. Keep the HTML alias and binding alias
+identical. Use the connected tool schemas rather than guessing arguments. Lesson authoring tools do
+not start, complete, skip, or reset the learner's progress.

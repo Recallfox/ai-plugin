@@ -6,6 +6,15 @@
       "headers": {
         "x-recallfox-client": "plugin"
       }
+    },
+    "recallfox-media": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "--package=https://github.com/Recallfox/recallfox-media/releases/download/v0.1.0/recallfox-media-0.1.0.tgz",
+        "recallfox-media",
+        "mcp"
+      ]
     }
   }
 }

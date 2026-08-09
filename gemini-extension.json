@@ -1,6 +1,6 @@
 {
   "name": "recallfox",
-  "version": "0.6.3",
+  "version": "0.7.0",
   "description": "Create interactive Lessons and durable recallfox cards from Gemini CLI",
   "mcpServers": {
     "recallfox": {
@@ -10,6 +10,15 @@
         "${RECALLFOX_MCP_URL:-https://app.recallfox.com/api/v1/mcp}",
         "--header",
         "x-recallfox-client:plugin"
+      ]
+    },
+    "recallfox-media": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "--package=https://github.com/Recallfox/recallfox-media/releases/download/v0.1.0/recallfox-media-0.1.0.tgz",
+        "recallfox-media",
+        "mcp"
       ]
     }
   },

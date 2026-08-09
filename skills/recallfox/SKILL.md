@@ -122,7 +122,7 @@ Name the proposed type so the user can judge it.
   commands, and ordinary question-answer knowledge. This is the default when direct recall is the
   real skill.
 - **Cloze — complete meaningful context:** use when recalling an exact word or short phrase inside a
-  sentence provides a useful cue. Hide answers in `[square brackets]`; do not use cloze merely to
+  sentence provides a useful cue. Hide answers in `[[double brackets]]`; do not use cloze merely to
   turn a list into many weak cards.
 - **Options — discriminate among plausible alternatives:** use for classification, diagnosis,
   commonly confused concepts, or a naturally closed set where choosing the right alternative is
@@ -171,7 +171,7 @@ answers and Options choices may be a phrase or one word when that is sufficient.
 
 - **Basic** — Front: “Why can a metal spoon feel colder than a wooden spoon in the same room?”
   Back: “Metal transfers heat away from your hand faster; the spoons may be the same temperature.”
-- **Cloze** — “Plants convert light energy into chemical energy through [photosynthesis].”
+- **Cloze** — “Plants convert light energy into chemical energy through [[photosynthesis]].”
 - **Options** — Front: “Which planet has the shortest year?” Options: “Mercury” **(correct)**,
   “Venus,” “Earth,” “Mars.” Back: “Mercury completes an orbit in about 88 Earth days.”
 - **Options, scenario-based** — Front: “Bread dough stays dense after adequate kneading. The yeast
@@ -193,6 +193,28 @@ answers and Options choices may be a phrase or one word when that is sufficient.
 7. If this was a learning conversation and an interactive explanation would add real value, make the
    single optional Lesson offer described above. Do not create it in the card write without consent.
 
+## Add images only when they teach
+
+- Use an image when spatial structure, a diagram, an artifact, or a visual comparison materially
+  improves learning. Do not decorate cards or Lessons with unrelated images.
+- Before importing an online image, inspect the actual image and its source page. Confirm that the
+  user accepts the source and has a valid reuse basis. Never treat a search thumbnail as the source.
+- For an online image, call `import_image_from_url` with the original public HTTPS image URL. The
+  remote server downloads, validates, normalizes, and stores it privately. Call `get_media_image`
+  on the returned asset and verify that the stored normalized image is the intended one.
+- For a local image, call local `inspect_local_image`. Pass its filename, size, and SHA-256 to remote
+  `authorize_local_image_upload`. Then call local `upload_local_image` with the same path and the
+  returned one-use token. Never quote, log, or reuse the token.
+- If the local media tool is unavailable, explain that local automatic upload needs Node.js and the
+  plugin's `recallfox-media` MCP server. Do not claim that remote MCP can read a local path.
+- Choose a lowercase hyphenated alias. Bind the returned asset using `{alias, asset_id}` in the card
+  or Lesson write. An alias is local to that note or Lesson step.
+- Place card images with `![useful alt text](rf-media-alias:alias)`. Place Lesson images with
+  `<img data-rf-media-alias="alias" alt="useful alt text">`. The reference and binding aliases must
+  match exactly. Never put asset ids, S3 paths, or external image URLs in authored content.
+- Include the image, placement, alias, and alt text in the same consent proposal as the content.
+  Read the saved content back and verify that every reference has a binding.
+
 ## MCP tools
 
 - Inspect: `list_decks`, `list_topics`, `list_cards`.
@@ -205,6 +227,9 @@ answers and Options choices may be a phrase or one word when that is sufficient.
 - Lessons: `list_lessons`, `get_lesson`, `create_lesson`, `update_lesson`, `add_lesson_step`,
   `update_lesson_step`, `reorder_lesson_steps`, `delete_lesson_step`, `reorder_lessons`,
   `delete_lesson`. Follow the companion authoring skill before using Lesson write tools.
+- Media, remote: `import_image_from_url`, `get_media_metadata`, `get_media_image`,
+  `authorize_local_image_upload`.
+- Media, local helper: `inspect_local_image`, `upload_local_image`.
 
 Use note ids returned by `list_cards` or create tools for update, assignment, move, and delete calls.
 Use the exact connected tool schemas rather than guessing arguments.

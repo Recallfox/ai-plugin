@@ -18,12 +18,15 @@ new idea through examples, then let spaced repetition resurface it so the knowle
 
 ## What's inside
 
-- **MCP connector** (`recallfox`) connects to the remote recallfox MCP server and exposes
+- **MCP connectors** use the remote `recallfox` server for account-scoped operations and the local
+  `recallfox-media` helper for explicitly selected local image files. Together they expose
   deck, topic, Learning Path, Lesson, and card operations, scoped to your account over OAuth:
   - inspect decks, retention, topics, progress/access, existing Lessons, and cards;
   - create/update/delete/reorder topics and configure or study ahead in a Learning Path;
   - create/update/delete/reorder interactive Lessons and their HTML steps;
   - create/update/delete cards, assign them to topics, and move them across decks.
+  - import reviewed public HTTPS images, or upload a local image with a five-minute, one-use token;
+  - bind images by alias to card Markdown or sandboxed Lesson HTML.
 - **Skills** teach the agent how to retain and teach what you learn:
   - `recallfox` captures durable ideas as well-formed Basic, Cloze, or Options cards, chooses the
     retrieval-appropriate type, reuses existing structure, reasons about locked topics and
@@ -45,7 +48,8 @@ Install the full plugin (MCP connector + skills + commands) from this repo:
 ```
 
 On first use, Claude Code walks you through a one-time OAuth authorization in the browser to
-connect the recallfox MCP server to your account. Nothing else to configure.
+connect the recallfox MCP server to your account. Node.js 22 or newer is needed only when a local
+image is uploaded. The plugin starts that local helper through `npx`; it never receives account OAuth.
 
 ### Codex
 
@@ -57,7 +61,8 @@ codex plugin marketplace add Recallfox/ai-plugin
 codex plugin add recallfox@recallfox
 ```
 
-Auth is the same one-click browser OAuth as Claude Code. There is no API key to paste.
+Auth is the same one-click browser OAuth as Claude Code. There is no API key to paste. Local image
+upload also needs Node.js 22 or newer for the bundled `npx` MCP helper.
 
 ### Cursor
 
@@ -73,6 +78,23 @@ Lesson and card-authoring guidance:
 ```
 gemini extensions install https://github.com/Recallfox/ai-plugin
 ```
+
+Gemini also starts the local media helper through `npx` when local image tools are used.
+
+## Image flow
+
+- Online image: the agent inspects the original image and source, asks for approval, then the remote
+  MCP downloads, validates, normalizes, stores, and binds it.
+- Local image: the local MCP inspects only the selected path. The remote MCP creates a five-minute,
+  one-use token bound to the filename, byte size, and SHA-256. The local MCP sends the file directly
+  to RecallFox. The image bytes and account credential never enter model context.
+- Card Markdown uses `![alt](rf-media-alias:alias)`. Lesson HTML uses
+  `<img data-rf-media-alias="alias" alt="alt">`. RecallFox resolves the private asset at render time.
+
+The local helper is open source at `Recallfox/recallfox-media`. The plugin runs the versioned npm
+tarball attached to its GitHub Release. It has no runtime npm dependencies and uploads only to the
+fixed RecallFox production endpoint. An explicit localhost-only override exists for development and
+tests.
 
 ### Hermes Agent
 
@@ -121,8 +143,8 @@ ai-plugin/
     install.sh          clone/update and symlink installer
   gemini-extension.json Gemini CLI extension (mcp-remote bridge)
   GEMINI.md             Gemini context file (Lesson + card guidance)
-  .mcp.json             recallfox MCP connector (dotted, shared)
-  mcp.json              recallfox MCP connector (non-dotted duplicate, some clients)
+  .mcp.json             remote RecallFox and local media MCP connectors (dotted, shared)
+  mcp.json              same connectors (non-dotted duplicate, some clients)
   skills/recallfox/     when + how to capture durable knowledge
   skills/author-lessons/ lesson pedagogy, sandbox runtime, libraries, and examples
   commands/             slash commands (.md for Claude Code, .toml for Gemini)

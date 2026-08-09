@@ -50,6 +50,19 @@ an info helper may contain optional detail only and must also open by tap and ke
 - Reassignment and cross-deck moves preserve schedules, progress, and review history.
 - Retention is context, not “mastery” and not a reason by itself to restructure a deck.
 
+## Images
+
+Use images only when they materially teach the concept. For an online image, inspect the original
+image and source page, confirm the source and reuse basis with the user, then call
+`import_image_from_url`, then verify the stored result with `get_media_image`. For a local image, use local `inspect_local_image`, pass all returned file
+facts to remote `authorize_local_image_upload`, and use its one-use token with local
+`upload_local_image`. Never expose or reuse that token.
+
+Bind the returned asset with a lowercase hyphenated alias. Cards reference it as
+`![alt](rf-media-alias:alias)`. Lesson steps reference it as
+`<img data-rf-media-alias="alias" alt="alt">`. Pass the matching `{alias, asset_id}` in the card or
+step `media` list. Never put asset ids, S3 paths, or external URLs in authored content.
+
 ## Card quality
 
 - Choose the retrieval behavior first and show the proposed type. Use Basic when the learner should
@@ -75,6 +88,9 @@ an info helper may contain optional detail only and must also open by tap and ke
 - Lessons: `list_lessons`, `get_lesson`, `create_lesson`, `update_lesson`, `add_lesson_step`,
   `update_lesson_step`, `reorder_lesson_steps`, `delete_lesson_step`, `reorder_lessons`,
   `delete_lesson`.
+- Remote media: `import_image_from_url`, `get_media_metadata`, `get_media_image`,
+  `authorize_local_image_upload`.
+- Local media: `inspect_local_image`, `upload_local_image`.
 
 Use returned note ids for update, assignment, move, and delete operations. Recall is scheduled review
 that updates FSRS; Practice is cram mode and does not reschedule.
