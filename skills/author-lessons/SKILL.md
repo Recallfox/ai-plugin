@@ -204,9 +204,9 @@ Use `width: 100%`, responsive grid/flex wrapping, and `max-width` for readable p
 scroll vertically. Make SVG/canvas responsive and recalculate dimensions with `ResizeObserver` when
 needed. Do not use a fixed desktop artboard or rely on `100vh` inside the frame.
 
-The frame canvas and cards default to white. RecallFox injects CSS variables including `--primary`,
-`--primary-foreground`, `--secondary`, `--muted`, `--muted-foreground`, `--accent`, `--border`,
-`--ring`, `--font-sans`, and `--font-mono`. The stable light baseline is:
+Set both `background` and `color` on the Lesson's top-level teaching surface. Prefer RecallFox's
+semantic color pairs for ordinary, theme-adaptive UI. RecallFox injects these pairs plus
+`--font-sans` and `--font-mono`:
 
 | Role | Value |
 | --- | --- |
@@ -214,18 +214,23 @@ The frame canvas and cards default to white. RecallFox injects CSS variables inc
 | Main text | `#0f2e2e` |
 | Primary teal | `#0f766e` |
 | Primary text | `#ffffff` |
-| Secondary surface/text | `#e6f3f1` / `#0f3d38` |
-| Muted surface/text | `#eef5f4` / `#577770` |
-| Accent surface | `#ccfbf1` |
+| Secondary surface/text | `--secondary` / `--secondary-foreground` (`#e6f3f1` / `#0f3d38`) |
+| Muted surface/text | `--muted` / `--muted-foreground` (`#eef5f4` / `#577770`) |
+| Accent surface/text | `--accent` / `--accent-foreground` (`#ccfbf1` / `#0f3d38`) |
 | Border | `#dcebe8` |
 | Focus ring | `#0f766e` |
-| Destructive/error | `#b93b34` |
+| Destructive surface/text | `--destructive` / `--destructive-foreground` (`#b93b34` / `#ffffff`) |
 
-Use the injected variables when this scheme fits. It is optional: a white scientific canvas,
-categorical visualization colors, or a concept-specific palette is welcome when it explains the
-subject better. Maintain WCAG AA contrast, avoid color-only meaning, and keep fox orange out of
-ordinary controls. Figtree is available through `var(--font-sans)` and IBM Plex Mono through
-`var(--font-mono)`.
+Whenever a rule uses a semantic surface, set its matching foreground in the same rule, for example
+`background:var(--secondary);color:var(--secondary-foreground)`. Intentional fixed colors remain
+allowed when they improve the teaching: a white scientific canvas should explicitly pair
+`background:#fff` with a dark text color, and any other fixed surface should likewise declare its
+contrasting fixed foreground in the same scope. Do not mix a fixed foreground with a theme-variable
+background, or a fixed background with a theme-variable foreground, unless the combination has been
+verified in every supported theme. This pairing rule, rather than a ban on custom colors, prevents
+dark-on-dark and light-on-light content. Maintain WCAG AA contrast, avoid color-only meaning, and
+keep fox orange out of ordinary controls. Figtree is available through `var(--font-sans)` and IBM
+Plex Mono through `var(--font-mono)`.
 
 ### Native starter fragment
 
